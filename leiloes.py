@@ -18,11 +18,13 @@
 
 
 from flask import Flask, jsonify, request
+from datetime import datetime
 
+import re
 import logging
 import psycopg2
 import time
-from aux import verify_password
+from aux import encode_password, verify_email, generate_token_value
 
 app = Flask(__name__)
 
@@ -104,6 +106,48 @@ def get_department(ndep):
     return jsonify(content)
 
 
+
+###################################
+#### FUNÇÃO que cria um token #####
+###################################
+
+def add_token(user_name,user_email):
+    logger.info("### New token created ###")
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- New Token ----")
+
+    hours = 1
+    hours_added = datetime. timedelta(hours = hours)
+    token_validade = datetime. now() + hours_added
+
+    token_value = generate_token_value(base_token_value)
+
+    
+    statement = """
+                  INSERT INTO token (valor, validade, utilizador_user_name, utilizador_email) 
+                          VALUES (%s, %s, %s, %s)"""
+
+    values = (token_value, token_validade,
+              user_name,user_email)
+
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        result = 'Token created with success!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Token could not be created.'
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return jsonify(result)
+
+
+
 # Add a new user
 @app.route("/dbproj/user/", methods=['POST'])
 def add_users():
@@ -116,12 +160,15 @@ def add_users():
     logger.info("---- New User ----")
     logger.debug(f'payload: {payload}')
 
+
     statement = """
                   INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
                           VALUES (%s, %s, %s, %s, %s, %s)"""
 
     values = (payload["user_name"], payload["email"],
               payload["password"], "true", "0", "false")
+
+    add_token(payload["user_name"], payload["email"])
 
     try:
         cur.execute(statement, values)
@@ -172,6 +219,40 @@ def add_admin():
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         result = 'Admin was not inserted.'
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return jsonify(result)
+
+
+@app.route("/dbproj/leilao/", methods=['POST'])
+def new_auction():
+    logger.info("### POST - Add new auction ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- New auction ----")
+    logger.debug(f'payload: {payload}')
+
+    data_inicial = datetime.now()
+
+    statement = """
+                  INSERT INTO leilao (titulo, ean_artigo, estado, data_final, data_inicial, preco_min, utilizador_user_name, utilizador_email) 
+                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+
+    values = (payload["titulo"], payload["ean_artigo"], "1",
+              payload["data_final"], data_inicial, payload["preco_min"], "false")
+
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        result = 'User inserted with success!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'User was not inserted.'
     finally:
         if conn is not None:
             conn.close()
@@ -244,6 +325,8 @@ def db_connection():
 # MAIN
 ##########################################################
 if __name__ == "__main__":
+    #variables
+    base_token_value = 1_000_000_000
 
     # Set up the logging
     logging.basicConfig(filename="logs/log_file.log")
@@ -251,6 +334,7 @@ if __name__ == "__main__":
     logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
+    
 
     # create formatter
     formatter = logging.Formatter('%(asctime)s [%(levelname)s]:  %(message)s',
