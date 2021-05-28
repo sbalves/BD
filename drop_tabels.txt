@@ -1,0 +1,7 @@
+drop table descricao;
+drop table notificacao;
+drop table mensagem;
+drop table token;
+drop table licitacao;
+drop table leilao;
+drop table utilizador;

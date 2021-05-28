@@ -18,13 +18,14 @@
 
 
 from flask import Flask, jsonify, request
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import re
 import logging
 import psycopg2
 import time
-from aux import encode_password, verify_email, generate_token_value
+import os
+from aux import verify_password, verify_email
 
 app = Flask(__name__)
 
@@ -42,76 +43,11 @@ def hello():
     """
 
 
-##
-# Demo GET
-##
-# Obtain all departments, in JSON format
-##
-# To use it, access:
-##
-# http://localhost:8080/departments/
-##
-
-@app.route("/departments/", methods=['GET'], strict_slashes=True)
-def get_all_departments():
-    logger.info("###              DEMO: GET /departments              ###")
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT ndep, nome, local FROM dep")
-    rows = cur.fetchall()
-
-    payload = []
-    logger.debug("---- departments  ----")
-    for row in rows:
-        logger.debug(row)
-        content = {'ndep': int(row[0]), 'nome': row[1], 'localidade': row[2]}
-        payload.append(content)  # appending to the payload to be returned
-
-    conn.close()
-    return jsonify(payload)
-
-
-##
-# Demo GET
-##
-# Obtain department with ndep <ndep>
-##
-# To use it, access:
-##
-# http://localhost:8080/departments/10
-##
-
-@app.route("/departments/<ndep>", methods=['GET'])
-def get_department(ndep):
-    logger.info(
-        "###              DEMO: GET /departments/<ndep>              ###")
-
-    # logger.debug(f"ndep: {ndep}')
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT ndep, nome, local FROM dep where ndep = %s", (ndep,))
-    rows = cur.fetchall()
-
-    row = rows[0]
-
-    logger.debug("---- selected department  ----")
-    logger.debug(row)
-    content = {'ndep': int(row[0]), 'nome': row[1], 'localidade': row[2]}
-
-    conn.close()
-    return jsonify(content)
-
-
-
 ###################################
 #### FUNÇÃO que cria um token #####
 ###################################
 
-def add_token(user_name,user_email):
+def add_token(user_name):
     logger.info("### New token created ###")
 
     conn = db_connection()
@@ -120,32 +56,31 @@ def add_token(user_name,user_email):
     logger.info("---- New Token ----")
 
     hours = 1
-    hours_added = datetime. timedelta(hours = hours)
-    token_validade = datetime. now() + hours_added
+    hours_added = timedelta(hours=hours)
+    token_validade = datetime.now() + hours_added
 
-    token_value = generate_token_value(base_token_value)
+    add_token.counter += 1
+    token_value = add_token.counter
 
-    
     statement = """
-                  INSERT INTO token (valor, validade, utilizador_user_name, utilizador_email) 
-                          VALUES (%s, %s, %s, %s)"""
+                  INSERT INTO token (valor, validade, utilizador_user_name) 
+                          VALUES (%s, %s, %s)"""
 
     values = (token_value, token_validade,
-              user_name,user_email)
+              user_name)
 
     try:
         cur.execute(statement, values)
         cur.execute("commit")
         result = 'Token created with success!'
+        logger.info(result)
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         result = 'Token could not be created.'
     finally:
         if conn is not None:
             conn.close()
-
-    return jsonify(result)
-
+    return token_value
 
 
 # Add a new user
@@ -160,27 +95,29 @@ def add_users():
     logger.info("---- New User ----")
     logger.debug(f'payload: {payload}')
 
-
     statement = """
-                  INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
-                          VALUES (%s, %s, %s, %s, %s, %s)"""
+                INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
+                VALUES (%s, %s, %s, %s, %s, %s)"""
 
     values = (payload["user_name"], payload["email"],
               payload["password"], "true", "0", "false")
 
-    add_token(payload["user_name"], payload["email"])
-
-    try:
-        cur.execute(statement, values)
-        cur.execute("commit")
-        result = 'User inserted with success!'
-    except (Exception, psycopg2.DatabaseError) as error:
-        logger.error(error)
-        result = 'User was not inserted.'
-    finally:
+    if verify_email(payload["email"]) == False:
+        result = "Error: Invalid email"
+        logger.error(result)
         if conn is not None:
             conn.close()
-
+    else:
+        try:
+            cur.execute(statement, values)
+            cur.execute("commit")
+            result = 'User inserted with success!'
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(error)
+            result = 'User was not inserted.'
+        finally:
+            if conn is not None:
+                conn.close()
     return jsonify(result)
 
 
@@ -197,33 +134,76 @@ def add_admin():
     logger.debug(f'payload: {payload}')
 
     statement = """
-                  INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
-                          VALUES (%s, %s, %s, %s, %s, %s)"""
+                INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
+                VALUES (%s, %s, %s, %s, %s, %s)"""
 
     values = (payload["user_name"], payload["email"],
               payload["password"], "true", "0", "true")
 
-    """
     if verify_password(payload["password"]) == False:
         result = "Error: Wrong password"
         logger.error(result)
         if conn is not None:
             conn.close()
-           
     else:
-    """
+        try:
+            cur.execute(statement, values)
+            cur.execute("commit")
+            result = 'Admin was inserted!'
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(error)
+            result = 'Admin was not inserted.'
+        finally:
+            if conn is not None:
+                conn.close()
+    return jsonify(result)
+
+
+###################################
+#### FUNÇÃO de autenticação #######
+###################################
+
+@app.route("/dbproj/user/", methods=['PUT'])
+def user_autentification():
+    logger.info("### PUT - Login user ###")
+    content = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    if content["user_name"] is None or content["password"] is None:
+        return 'Username and password are required to login.'
+
+    if "user_name" not in content or "password" not in content:
+        return 'User_name and password are required to autenticate!'
+
+    logger.info("----  Autenticate User  ----")
+    logger.info(f'content: {content}')
+
+    statement = """
+                SELECT user_name, password 
+                FROM utilizador
+                WHERE user_name = %s and password = %s"""
+
+    values = (content["user_name"], content["password"])
+
     try:
         cur.execute(statement, values)
-        cur.execute("commit")
-        result = 'Admin inserted with success!'
-    except (Exception, psycopg2.DatabaseError) as error:
+        row = cur.fetchone()
+        if row == None:
+            result = 'Username or password invalid'
+            logger.error(result)
+        else:
+            token_value = add_token(row[0])
+            logger.info(row)
+            result = f'Login confirmed! Token value: {token_value}'
+    except (Exception, psycopg2.DatabaseError) as error:  # psycopg2
         logger.error(error)
-        result = 'Admin was not inserted.'
+        result = 'Failed!'
     finally:
         if conn is not None:
             conn.close()
-
-    return jsonify(result)
+    return jsonify(result)  # flask
 
 
 @app.route("/dbproj/leilao/", methods=['POST'])
@@ -259,54 +239,6 @@ def new_auction():
 
     return jsonify(result)
 
-##
-# Demo PUT
-##
-# Update a department based on the a JSON payload
-##
-# To use it, you need to use postman or curl:
-##
-# curl -X PUT http://localhost:8080/departments/ -H "Content-Type: application/json" -d '{"ndep": 69, "localidade": "Porto"}'
-##
-
-
-@app.route("/departments/", methods=['PUT'])
-def update_departments():
-    logger.info("###              DEMO: PUT /departments              ###")
-    content = request.get_json()
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    # if content["ndep"] is None or content["nome"] is None :
-    #    return 'ndep and nome are required to update'
-
-    if "ndep" not in content or "localidade" not in content:
-        return 'ndep and localidade are required to update'
-
-    logger.info("---- update department  ----")
-    logger.info(f'content: {content}')
-
-    # parameterized queries, good for security and performance
-    statement = """
-                UPDATE dep 
-                  SET local = %s
-                WHERE ndep = %s"""
-
-    values = (content["localidade"], content["ndep"])
-
-    try:
-        res = cur.execute(statement, values)
-        result = f'Updated: {cur.rowcount}'
-        cur.execute("commit")
-    except (Exception, psycopg2.DatabaseError) as error:
-        logger.error(error)
-        result = 'Failed!'
-    finally:
-        if conn is not None:
-            conn.close()
-    return jsonify(result)
-
 
 ##########################################################
 # DATABASE ACCESS
@@ -325,8 +257,8 @@ def db_connection():
 # MAIN
 ##########################################################
 if __name__ == "__main__":
-    #variables
-    base_token_value = 1_000_000_000
+    # variables
+    add_token.counter = 1_000_000_009
 
     # Set up the logging
     logging.basicConfig(filename="logs/log_file.log")
@@ -334,7 +266,6 @@ if __name__ == "__main__":
     logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
-    
 
     # create formatter
     formatter = logging.Formatter('%(asctime)s [%(levelname)s]:  %(message)s',

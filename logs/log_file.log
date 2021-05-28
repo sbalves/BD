@@ -633,3 +633,914 @@ DETAIL:  Key (user_name, email)=(goncalo, goncalo@gmail.com) already exists.
 INFO:werkzeug:127.0.0.1 - - [27/May/2021 23:50:17] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
 INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/aux.py', reloading
 INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+INFO:werkzeug: * Running on http://localhost:8080/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:31:58] "[33mGET /dbproj/leiloes/ HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:32:26] "[31m[1mGET /dbproj/user/ HTTP/1.1[0m" 405 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'goncalo', 'email': 'goncalo@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:32:48] "[35m[1mPOST /dbproj/user/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+INFO:werkzeug: * Running on http://localhost:8080/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'goncalo', 'email': 'goncalo@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:33:49] "[35m[1mPOST /dbproj/user/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'goncalo', 'email': 'goncalo@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:36:05] "[35m[1mPOST /dbproj/user/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'goncalo', 'email': 'goncalo@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:relation "token" does not exist
+LINE 2:                   INSERT INTO token (valor, validade, utiliz...
+                                      ^
+
+ERROR:logger:relation "utilizador" does not exist
+LINE 2:                   INSERT INTO utilizador (user_name, email, ...
+                                      ^
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:38:23] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'goncalo', 'email': 'goncalo@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:insert or update on table "token" violates foreign key constraint "token_fk1"
+DETAIL:  Key (utilizador_user_name)=(goncalo) is not present in table "utilizador".
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:41:36] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia', 'email': 'sofia@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:45:11] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'rita', 'email': 'rita@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000001) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:47:04] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'joana', 'email': 'joana@gmail.com', 'password': 'pass'}
+ERROR:logger:Error: Wrong password
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:47:16] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'joana', 'email': 'joana@gmail.com', 'password': 'pato1234'}
+ERROR:logger:Error: Wrong password
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:51:17] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'joana', 'email': 'joana@gmail.com', 'password': 'pato123'}
+ERROR:logger:Error: Wrong password
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:51:20] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'joana', 'email': 'joana@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000001) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:51:29] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/aux.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'eva', 'email': 'eva@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:name 'base_token_value' is not defined
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:57:24] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'eva', 'email': 'eva@gmail.com', 'password': 'pato345'}
+ERROR:logger:duplicate key value violates unique constraint "utilizador_pkey"
+DETAIL:  Key (user_name, email)=(eva, eva@gmail.com) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:58:46] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'bento', 'email': 'bento@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000001) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 11:59:48] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/aux.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia1', 'email': 'sofia1@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000001) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:05:58] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia3', 'email': 'sofia3@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:12:02] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia2', 'email': 'sofia2@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:12:49] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia2', 'email': 'sofia2@gmail.com', 'password': 'pato1234'}
+ERROR:logger:duplicate key value violates unique constraint "utilizador_pkey"
+DETAIL:  Key (user_name, email)=(sofia2, sofia2@gmail.com) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:15:46] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia4', 'email': 'sofia4@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:15:52] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia5', 'email': 'sofia5@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000001) already exists.
+
+ERROR:logger:can only concatenate str (not "int") to str
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:22:06] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia5', 'email': 'sofia5@gmail.com', 'password': 'pato1234'}
+ERROR:logger:duplicate key value violates unique constraint "utilizador_pkey"
+DETAIL:  Key (user_name, email)=(sofia5, sofia5@gmail.com) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:22:56] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia6', 'email': 'sofia6@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:can only concatenate str (not "tuple") to str
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:27:54] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia7', 'email': 'sofia7@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:can only concatenate str (not "tuple") to str
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:28:09] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia7', 'email': 'sofia7@gmail.com', 'password': 'pato1234'}
+ERROR:logger:duplicate key value violates unique constraint "utilizador_pkey"
+DETAIL:  Key (user_name, email)=(sofia7, sofia7@gmail.com) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:31:31] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia8', 'email': 'sofia8@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+ERROR:logger:can only concatenate str (not "int") to str
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:31:51] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia9', 'email': 'sofia9@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:33:16] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia10', 'email': 'sofia10@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:36:52] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia11', 'email': 'sofia11@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:38:54] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+INFO:werkzeug: * Running on http://localhost:8080/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia11', 'email': 'sofia11@gmail.com', 'password': 'pato1234'}
+ERROR:logger:duplicate key value violates unique constraint "utilizador_pkey"
+DETAIL:  Key (user_name, email)=(sofia11, sofia11@gmail.com) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:39:23] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia12', 'email': 'sofia12@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:39:29] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia13', 'email': 'sofia13@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:39:49] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia14', 'email': 'sofia14@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000002) already exists.
+
+ERROR:logger:Token could not be created.
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:40:06] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia15', 'email': 'sofia15@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:Token created with success!
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:45:35] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia16', 'email': 'sofia16@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:Token created with success!
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:45:43] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia17', 'email': 'sofia17@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:Token created with success!
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:45:49] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia18', 'email': 'sofia18@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000003) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:51:10] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia19', 'email': 'sofia19@gmail.com', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:logger:Token created with success!
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:54:48] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia20', 'email': 'sofia20@gmail.com', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:logger:Token created with success!
+INFO:logger:User inserted with success!
+Token value: 1000000007
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 12:55:09] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'bento', 'password': 'pato345'}
+INFO:logger:('bento', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 15:44:37] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva1', 'password': 'pato345'}
+INFO:logger:None
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 15:45:37] "[35m[1mPUT /dbproj/user/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+INFO:logger:('eva', 'pato345')
+INFO:logger:('eva', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 15:51:26] "[35m[1mPUT /dbproj/user/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+INFO:logger:('eva', 'pato345')
+INFO:logger:('eva', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 15:52:05] "[35m[1mPUT /dbproj/user/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+INFO:logger:('eva', 'pato345')
+INFO:logger:('eva', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 15:53:21] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+INFO:logger:('eva', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:00:38] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva1', 'password': 'pato345'}
+INFO:logger:None
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:00:42] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva1', 'password': 'pato345'}
+INFO:logger:None
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:01:16] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva1', 'password': 'pato345'}
+ERROR:logger:Username or password invalid
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:11:24] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva1', 'password': 'pato345'}
+ERROR:logger:Username or password invalid
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:15:33] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000006) already exists.
+
+INFO:logger:('eva', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:15:41] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:insert or update on table "token" violates foreign key constraint "token_fk2"
+DETAIL:  Key (utilizador_email)=(pato345) is not present in table "utilizador".
+
+INFO:logger:('eva', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:17:07] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'eva', 'password': 'pato345'}
+ERROR:logger:Username or password invalid
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:23:18] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia20', 'email': 'sofia20@gmail.com', 'password': 'pato1234'}
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:24:05] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:###              PUT /dbproj/user             ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia20', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:insert or update on table "token" violates foreign key constraint "token_fk2"
+DETAIL:  Key (utilizador_email)=(pato1234) is not present in table "utilizador".
+
+INFO:logger:('sofia20', 'pato1234')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:24:20] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### PUT - Login user ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia20', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:null value in column "utilizador_email" of relation "token" violates not-null constraint
+DETAIL:  Failing row contains (1000000008, 2021-05-28 17:24:59.09613, sofia20, null).
+
+INFO:logger:('sofia20', 'pato1234')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:24:59] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### PUT - Login user ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia20', 'password': 'pato1234'}
+ERROR:logger:Username or password invalid
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:34:30] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new user ###
+INFO:logger:---- New User ----
+DEBUG:logger:payload: {'user_name': 'sofia20', 'email': 'sofia20@gmail.com', 'password': 'pato1234'}
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:34:38] "[37mPOST /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### PUT - Login user ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia20', 'password': 'pato1234'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:logger:Token created with success!
+INFO:logger:('sofia20', 'pato1234')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:34:42] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia19', 'email': 'sofia19@gmail.com', 'password': 'pato345'}
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:36:40] "[35m[1mPOST /dbproj/admin/ HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia19', 'email': 'sofia19@gmail.com', 'password': 'pato345'}
+ERROR:logger:duplicate key value violates unique constraint "utilizador_pkey"
+DETAIL:  Key (user_name)=(sofia19) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:38:30] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### POST - Add new admin ###
+INFO:logger:---- New Admin ----
+DEBUG:logger:payload: {'user_name': 'sofia18', 'email': 'sofia18@gmail.com', 'password': 'pato345'}
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:38:36] "[37mPOST /dbproj/admin/ HTTP/1.1[0m" 200 -
+INFO:logger:### PUT - Login user ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia18', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:logger:Token created with success!
+INFO:logger:('sofia18', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:38:52] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### PUT - Login user ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia18', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+ERROR:logger:duplicate key value violates unique constraint "token_pkey"
+DETAIL:  Key (valor)=(1000000009) already exists.
+
+INFO:logger:('sofia18', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:39:15] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:werkzeug: * Detected change in '/Volumes/DISK_SOFS/Faculdade/2oAno/2oSemestre/Disciplinas/BD/Praticas/Projeto/Projeto_BD_meta_final/leiloes_BD/venv/leiloes.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/departments/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 310-140-021
+INFO:logger:### PUT - Login user ###
+INFO:logger:----  Autenticate User  ----
+INFO:logger:content: {'user_name': 'sofia18', 'password': 'pato345'}
+INFO:logger:### New token created ###
+INFO:logger:---- New Token ----
+INFO:logger:Token created with success!
+INFO:logger:('sofia18', 'pato345')
+INFO:werkzeug:127.0.0.1 - - [28/May/2021 16:39:46] "[37mPUT /dbproj/user/ HTTP/1.1[0m" 200 -
