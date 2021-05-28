@@ -180,15 +180,20 @@ def user_autentification():
     logger.info("----  Autenticate User  ----")
     logger.info(f'content: {content}')
 
-    statement = """
+    find_user = """
                 SELECT user_name, password 
                 FROM utilizador
                 WHERE user_name = %s and password = %s"""
 
+    verify_token = """ 
+                SELECT token.valor
+                FROM token
+                WHERE utilizador_user_name like %s"""
+
     values = (content["user_name"], content["password"])
 
     try:
-        cur.execute(statement, values)
+        cur.execute(find_user, values)
         row = cur.fetchone()
         if row == None:
             result = 'Username or password invalid'
