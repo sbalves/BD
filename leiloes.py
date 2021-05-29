@@ -10,11 +10,11 @@
 # =========== University of Coimbra ===========
 # =============================================
 ##
-# Authors:
+# Autores:
 # Eva Texeira
 # Joana Antunes
 # Sofia Alves
-# University of Coimbra
+## University of Coimbra
 
 
 from flask import Flask, jsonify, request
@@ -25,7 +25,7 @@ import logging
 import psycopg2
 import time
 import os
-from aux import verify_password, verify_email
+from _aux import verify_password, verify_email
 
 app = Flask(__name__)
 
@@ -48,7 +48,6 @@ def hello():
 ###################################
 
 def add_token(user_name):
-    logger.info("### New token created ###")
 
     conn = db_connection()
     cur = conn.cursor()
@@ -56,23 +55,24 @@ def add_token(user_name):
     logger.info("---- New Token ----")
 
     hours = 1
-    hours_added = timedelta(hours=hours)
+    hours_added = timedelta(hours = hours)
     token_validade = datetime.now() + hours_added
 
     add_token.counter += 1
     token_value = add_token.counter
 
+    logger.debug(f'token_value: {token_value}')
     statement = """
-                  INSERT INTO token (valor, validade, utilizador_user_name) 
-                          VALUES (%s, %s, %s)"""
+                INSERT INTO token (valor, validade, utilizador_user_name) 
+                VALUES (%s, %s, %s)
+                """
 
-    values = (token_value, token_validade,
-              user_name)
+    values = (token_value, token_validade, user_name)
 
     try:
         cur.execute(statement, values)
         cur.execute("commit")
-        result = 'Token created with success!'
+        result = 'Token was successfully created.'
         logger.info(result)
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
@@ -84,7 +84,7 @@ def add_token(user_name):
 
 
 # Add a new user
-@app.route("/dbproj/user/", methods=['POST'])
+@app.route("/dbproj/user/", methods = ['POST'])
 def add_users():
     logger.info("### POST - Add new user ###")
     payload = request.get_json()
@@ -97,13 +97,13 @@ def add_users():
 
     statement = """
                 INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
-                VALUES (%s, %s, %s, %s, %s, %s)"""
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """
 
-    values = (payload["user_name"], payload["email"],
-              payload["password"], "true", "0", "false")
+    values = (payload["user_name"], payload["email"], payload["password"], "true", "0", "false")
 
     if verify_email(payload["email"]) == False:
-        result = "Error: Invalid email"
+        result = "Invalid email."
         logger.error(result)
         if conn is not None:
             conn.close()
@@ -112,6 +112,7 @@ def add_users():
             cur.execute(statement, values)
             cur.execute("commit")
             result = 'User inserted with success!'
+            logger.info(result)
         except (Exception, psycopg2.DatabaseError) as error:
             logger.error(error)
             result = 'User was not inserted.'
@@ -122,7 +123,7 @@ def add_users():
 
 
 # Add new admin
-@app.route("/dbproj/admin/", methods=['POST'])
+@app.route("/dbproj/admin/", methods = ['POST'])
 def add_admin():
     logger.info("### POST - Add new admin ###")
     payload = request.get_json()
@@ -130,18 +131,21 @@ def add_admin():
     conn = db_connection()
     cur = conn.cursor()
 
+    if payload["user_name"] is None or payload["email"] is None or payload["password"]:
+        return 'Username, email and password are required to register.'
+
     logger.info("---- New Admin ----")
     logger.debug(f'payload: {payload}')
 
     statement = """
                 INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
-                VALUES (%s, %s, %s, %s, %s, %s)"""
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """
 
-    values = (payload["user_name"], payload["email"],
-              payload["password"], "true", "0", "true")
+    values = (payload["user_name"], payload["email"], payload["password"], "true", "0", "true")
 
     if verify_password(payload["password"]) == False:
-        result = "Error: Wrong password"
+        result = "Wrong password!"
         logger.error(result)
         if conn is not None:
             conn.close()
@@ -150,6 +154,7 @@ def add_admin():
             cur.execute(statement, values)
             cur.execute("commit")
             result = 'Admin was inserted!'
+            logger.info(result)
         except (Exception, psycopg2.DatabaseError) as error:
             logger.error(error)
             result = 'Admin was not inserted.'
@@ -163,55 +168,78 @@ def add_admin():
 #### FUNÇÃO de autenticação #######
 ###################################
 
-@app.route("/dbproj/user/", methods=['PUT'])
+@app.route("/dbproj/user/", methods = ['PUT'])
 def user_autentification():
-    logger.info("### PUT - Login user ###")
+    logger.info("### PUT - Login user/admin ###")
     content = request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    if content["user_name"] is None or content["password"] is None:
-        return 'Username and password are required to login.'
-
     if "user_name" not in content or "password" not in content:
-        return 'User_name and password are required to autenticate!'
+        return 'Username and password are required to autenticate!'
 
-    logger.info("----  Autenticate User  ----")
-    logger.info(f'content: {content}')
+    logger.info("----  Autenticate User/Admin  ----")
+    logger.debug(f'content: {content}')
 
     find_user = """
                 SELECT user_name, password 
                 FROM utilizador
-                WHERE user_name = %s and password = %s"""
+                WHERE user_name = %s and password = %s
+                """
+    """
+    verify_token = """ """
+                   SELECT valor
+                   FROM token
+                   WHERE utilizador_user_name = %s
+                   """
+    """
+    """
 
-    verify_token = """ 
-                SELECT token.valor
-                FROM token
-                WHERE utilizador_user_name like %s"""
-
-    values = (content["user_name"], content["password"])
+    values1 = (content["user_name"], content["password"])
+    # values2 = (content["user_name"])
 
     try:
-        cur.execute(find_user, values)
-        row = cur.fetchone()
-        if row == None:
-            result = 'Username or password invalid'
+        cur.execute(find_user, values1)
+        row1 = cur.fetchone()
+
+        if row1 == None:
+            result = 'Username or password invalid.'
             logger.error(result)
         else:
-            token_value = add_token(row[0])
-            logger.info(row)
+            """
+            cur.execute(verify_token, values2)
+            row2 = cur.fetchone()
+
+            if row2 == None:
+                result = 'Token does not exist yet. Creating new token...'
+                logger.info(result)
+            """
+            token_value = add_token(row1[0])
             result = f'Login confirmed! Token value: {token_value}'
-    except (Exception, psycopg2.DatabaseError) as error:  # psycopg2
+            logger.info(result)
+            """
+            else:
+                t1 = datetime.strptime(row2[1], "%b %d %H:%M:%S %Y")
+                if datetime.now().hour > t1.hour:
+                    result = 'Token still valid.'
+                    logger.inf(result)
+                else:
+                    token_value = add_token(row[0])
+                    result = f'Login confirmed! Token value: {token_value}'
+                    logger.info(result)
+            """
+    except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        result = 'Failed!'
+        result = 'The login failed.'
     finally:
         if conn is not None:
             conn.close()
-    return jsonify(result)  # flask
+    return jsonify(result)
 
 
-@app.route("/dbproj/leilao/", methods=['POST'])
+# Criação de um novo leilão
+@app.route("/dbproj/leilao/", methods = ['POST'])
 def new_auction():
     logger.info("### POST - Add new auction ###")
     payload = request.get_json()
@@ -225,11 +253,11 @@ def new_auction():
     data_inicial = datetime.now()
 
     statement = """
-                  INSERT INTO leilao (titulo, ean_artigo, estado, data_final, data_inicial, preco_min, utilizador_user_name, utilizador_email) 
-                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+                INSERT INTO leilao (titulo, ean_artigo, estado, data_final, data_inicial, preco_min, utilizador_user_name, utilizador_email) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """
 
-    values = (payload["titulo"], payload["ean_artigo"], "1",
-              payload["data_final"], data_inicial, payload["preco_min"], "false")
+    values = (payload["titulo"], payload["ean_artigo"], "1", payload["data_final"], datetime.now(), payload["preco_min"], "false")
 
     try:
         cur.execute(statement, values)
@@ -245,6 +273,47 @@ def new_auction():
     return jsonify(result)
 
 
+# Listar leilões
+@app.route("/dbproj/leiloes/", methods = ['GET'])
+def list_auctions():
+    logger.info("### GET - List Auctions ###")
+    content = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    if content is not None:
+        result = 'To list auctions there is no need of request.'
+        logger.error(result)
+        return result
+
+    list_auctions = """
+                    SELECT titulo, descricao
+                    FROM leilao, descricao
+                    WHERE leilao.ean_artigo = descricao.ean_artigo
+                    """
+
+    try:
+        cur.execute(list_auctions)
+        rows = cur.fetchall()
+
+        lista = []
+        logger.info("----  List Auctions  ----")
+        for row in rows:
+            logger.debug(row)
+            content = {'Título': row[0], 'Descrição': row[1]}
+            lista.append(content)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'User was not inserted.'
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return jsonify(lista)
+
+
+
 ##########################################################
 # DATABASE ACCESS
 ##########################################################
@@ -253,7 +322,7 @@ def db_connection():
     db = psycopg2.connect(user="postgres",
                           password="postgres",
                           host="localhost",
-                          port="5432",  # mudei a porta- anterior: 5432
+                          port="5432",
                           database="BD_Projeto")
     return db
 
