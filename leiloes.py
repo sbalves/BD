@@ -25,7 +25,7 @@ import logging
 import psycopg2
 import time
 import os
-from aux import verify_password, verify_email
+from _aux import verify_password, verify_email
 
 app = Flask(__name__)
 
@@ -585,7 +585,7 @@ def list_details(ean_artigo):
     return result
 
 
-@app.route('/dbproj/leilao/<leilaoId>/', methods=['GET'])
+@app.route('/dbproj/leilao/<leilaoId>/', methods = ['GET'])
 def get_auction_details(leilaoId):
     logger.info("### GET - Auction Details (by ID) ###")
     payload = request.get_json()
@@ -623,34 +623,65 @@ def get_auction_details(leilaoId):
 ########### Listar detalhes dos leilões por Utilizador ###########
 ##################################################################
 
+def list_biddings_byUser(user_name):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    list_biddingsbyUser = """
+                         SELECT leilao_ean_artigo
+                         FROM licitacao
+                         WHERE utilizador_user_name like %s
+                         """
+    value = ([user_name])
+
+    result = {}
+    try:
+        cur.execute(list_biddingsbyUser, value)
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            result = 'User does not have any biddings.'
+            logger.error(result)
+        else:
+            logger.info(rows)
+            auctions_bidded = []
+            for row in rows:
+                auctions_bidded.append(list_details(row))
+            result = auctions_bidded
+            return result
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Could not list auction details.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
 def list_auctions_byUser(user_name):
     conn = db_connection()
     cur = conn.cursor()
 
     list_auctionsbyUser = """
-                            SELECT ean_artigo
-                            FROM leilao
-                            WHERE leilao.utilizador_user_name like %s
-                            """
+                          SELECT ean_artigo
+                          FROM leilao
+                          WHERE utilizador_user_name like %s
+                          """
     value = ([user_name])
-
-    list_biddingbyUser
 
     result = {}
     try:
         cur.execute(list_auctionsbyUser, value)
         rows = cur.fetchall()
         if len(rows) == 0:
-            result = 'Auction not found.'
+            result = 'User does not have any auctions.'
             logger.error(result)
         else:
             logger.info(rows)
-            auction_created = []
+            auctions_created = []
             auctions_bidded = []
             for row in rows:
-                auction_created.append(list_details(row))
-            result["Auctions the user is part of."] = auction_created
-
+                auctions_created.append(list_details(row))
+            result["Auctions the user made biddings at."] = list_biddings_byUser(user_name)
+            result["Auctions the user created."] = auctions_created
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         result = 'Could not list auction details.'
@@ -701,11 +732,11 @@ def get_auction_details_user(userToken):
 
 
 def db_connection():
-    db = psycopg2.connect(user="postgres",
-                          password="postgres",
-                          host="localhost",
-                          port="5432",
-                          database="BD_Projeto")
+    db = psycopg2.connect(user = "postgres",
+                          password = "postgres",
+                          host = "localhost",
+                          port = "5432",
+                          database = "BD_Projeto")
     return db
 
 
