@@ -14,7 +14,7 @@
 # Eva Texeira
 # Joana Antunes
 # Sofia Alves
-## University of Coimbra
+# University of Coimbra
 
 
 from flask import Flask, jsonify, request
@@ -25,7 +25,7 @@ import logging
 import psycopg2
 import time
 import os
-from _aux import verify_password, verify_email
+from aux import verify_password, verify_email
 
 app = Flask(__name__)
 
@@ -33,7 +33,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     return """
-
     Hello World!  <br/>
     <br/>
     Check the sources for instructions on how to use the endpoints!<br/>
@@ -48,14 +47,14 @@ def hello():
 ###################################
 
 def add_token(user_name):
-
     conn = db_connection()
     cur = conn.cursor()
 
     logger.info("---- New Token ----")
 
     hours = 1
-    hours_added = timedelta(hours = hours)
+    # seconds = 5
+    hours_added = timedelta(hours=hours)
     token_validade = datetime.now() + hours_added
 
     add_token.counter += 1
@@ -63,7 +62,7 @@ def add_token(user_name):
 
     logger.debug(f'token_value: {token_value}')
     statement = """
-                INSERT INTO token (valor, validade, utilizador_user_name) 
+                INSERT INTO token (valor, validade, utilizador_user_name)
                 VALUES (%s, %s, %s)
                 """
 
@@ -83,8 +82,9 @@ def add_token(user_name):
     return token_value
 
 
-# Add a new user
-@app.route("/dbproj/user/", methods = ['POST'])
+# Adiciona novo utilizador
+
+@app.route("/dbproj/user/", methods=['POST'])
 def add_users():
     logger.info("### POST - Add new user ###")
     payload = request.get_json()
@@ -96,11 +96,12 @@ def add_users():
     logger.debug(f'payload: {payload}')
 
     statement = """
-                INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
+                INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin)
                 VALUES (%s, %s, %s, %s, %s, %s)
                 """
 
-    values = (payload["user_name"], payload["email"], payload["password"], "true", "0", "false")
+    values = (payload["user_name"], payload["email"],
+              payload["password"], "true", "0", "false")
 
     if verify_email(payload["email"]) == False:
         result = "Invalid email."
@@ -122,8 +123,9 @@ def add_users():
     return jsonify(result)
 
 
-# Add new admin
-@app.route("/dbproj/admin/", methods = ['POST'])
+# Adiciona novo administrador
+
+@app.route("/dbproj/admin/", methods=['POST'])
 def add_admin():
     logger.info("### POST - Add new admin ###")
     payload = request.get_json()
@@ -138,11 +140,12 @@ def add_admin():
     logger.debug(f'payload: {payload}')
 
     statement = """
-                INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin) 
+                INSERT INTO utilizador (user_name, email, password, estado, avaliacao, admin)
                 VALUES (%s, %s, %s, %s, %s, %s)
                 """
 
-    values = (payload["user_name"], payload["email"], payload["password"], "true", "0", "true")
+    values = (payload["user_name"], payload["email"],
+              payload["password"], "true", "0", "true")
 
     if verify_password(payload["password"]) == False:
         result = "Wrong password!"
@@ -168,7 +171,7 @@ def add_admin():
 #### FUNÇÃO de autenticação #######
 ###################################
 
-@app.route("/dbproj/user/", methods = ['PUT'])
+@app.route("/dbproj/user/", methods=['PUT'])
 def user_autentification():
     logger.info("### PUT - Login user/admin ###")
     content = request.get_json()
@@ -183,52 +186,24 @@ def user_autentification():
     logger.debug(f'content: {content}')
 
     find_user = """
-                SELECT user_name, password 
+                SELECT user_name, password
                 FROM utilizador
                 WHERE user_name = %s and password = %s
                 """
-    """
-    verify_token = """ """
-                   SELECT valor
-                   FROM token
-                   WHERE utilizador_user_name = %s
-                   """
-    """
-    """
 
     values1 = (content["user_name"], content["password"])
-    # values2 = (content["user_name"])
 
     try:
         cur.execute(find_user, values1)
         row1 = cur.fetchone()
 
-        if row1 == None:
+        if row1 is None:
             result = 'Username or password invalid.'
             logger.error(result)
         else:
-            """
-            cur.execute(verify_token, values2)
-            row2 = cur.fetchone()
-
-            if row2 == None:
-                result = 'Token does not exist yet. Creating new token...'
-                logger.info(result)
-            """
             token_value = add_token(row1[0])
             result = f'Login confirmed! Token value: {token_value}'
             logger.info(result)
-            """
-            else:
-                t1 = datetime.strptime(row2[1], "%b %d %H:%M:%S %Y")
-                if datetime.now().hour > t1.hour:
-                    result = 'Token still valid.'
-                    logger.inf(result)
-                else:
-                    token_value = add_token(row[0])
-                    result = f'Login confirmed! Token value: {token_value}'
-                    logger.info(result)
-            """
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         result = 'The login failed.'
@@ -238,8 +213,86 @@ def user_autentification():
     return jsonify(result)
 
 
-# Criação de um novo leilão
-@app.route("/dbproj/leilao/", methods = ['POST'])
+####################################
+#### Criação de um novo leilão #####
+####################################
+
+def delete_token(valor_token):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute("DELETE FROM token WHERE valor = %s", [valor_token])
+        cur.execute("commit")
+        result = "Token deleted with success"
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Description was not inserted.'
+    finally:
+        if conn is not None:
+            conn.close()
+    logger.info(result)
+
+
+# Criacao de uma descrição
+def add_description(descricao, ean_artigo):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    statement = """
+                INSERT INTO descricao (descricao, data, leilao_ean_artigo)
+                VALUES (%s, %s, %s)
+                """
+
+    values = (descricao, datetime.now(), int(ean_artigo))
+
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        result = 'Description inserted with success!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Description was not inserted.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+# Criacao de um leilao
+def create_auction(payload, user_name):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info(payload)
+
+    if "valor_token" not in payload or "titulo" not in payload or "ean_artigo" not in payload or "data_final" not in payload or "preco_min" not in payload or "descricao" not in payload:
+        logger.info("entrou")
+        return 'Username and password are required to autenticate!'
+
+    statement = """
+                INSERT INTO leilao (titulo, ean_artigo, estado, data_final, data_inicial, preco_min, utilizador_user_name)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+
+    values = (payload["titulo"], payload["ean_artigo"], "1",
+              payload["data_final"], datetime.now(), payload["preco_min"], user_name)
+
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        add_description(payload["descricao"], payload["ean_artigo"])
+        result = 'Auction created with success!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Auction was not created.'
+    finally:
+        if conn is not None:
+            conn.close()
+    logger.info(result)
+
+
+@app.route("/dbproj/leilao/", methods=['POST'])
 def new_auction():
     logger.info("### POST - Add new auction ###")
     payload = request.get_json()
@@ -250,73 +303,402 @@ def new_auction():
     logger.info("---- New auction ----")
     logger.debug(f'payload: {payload}')
 
-    data_inicial = datetime.now()
-
-    statement = """
-                INSERT INTO leilao (titulo, ean_artigo, estado, data_final, data_inicial, preco_min, utilizador_user_name, utilizador_email) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                """
-
-    values = (payload["titulo"], payload["ean_artigo"], "1", payload["data_final"], datetime.now(), payload["preco_min"], "false")
-
     try:
-        cur.execute(statement, values)
-        cur.execute("commit")
-        result = 'User inserted with success!'
+        cur.execute("SELECT * FROM token WHERE valor = %s",
+                    [payload["valor_token"]])
+        row = cur.fetchone()
+        if row is None:
+            result = 'User is not logged in.'
+            logger.error(result)
+        else:
+            if row[1] > datetime.now():
+                result = "Auction was created."
+                logger.info(f"row: {row}")
+                create_auction(payload, row[2])
+            else:
+                result = "Session expired."
+                delete_token(payload["valor_token"])
+                logger.error(result)
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        result = 'User was not inserted.'
+        result = 'Auction was not created.'
     finally:
         if conn is not None:
             conn.close()
-
     return jsonify(result)
 
 
-# Listar leilões
-@app.route("/dbproj/leiloes/", methods = ['GET'])
-def list_auctions():
-    logger.info("### GET - List Auctions ###")
-    content = request.get_json()
+###################################
+######## Listar leilões ###########
+###################################
 
+
+# Listar leilões
+def list_all_auctions():
     conn = db_connection()
     cur = conn.cursor()
-
-    if content is not None:
-        result = 'To list auctions there is no need of request.'
-        logger.error(result)
-        return result
 
     list_auctions = """
                     SELECT titulo, descricao
                     FROM leilao, descricao
-                    WHERE leilao.ean_artigo = descricao.ean_artigo
+                    WHERE leilao.ean_artigo = descricao.leilao_ean_artigo and estado = 1
                     """
 
     try:
         cur.execute(list_auctions)
         rows = cur.fetchall()
-
-        lista = []
+        logger.info(rows)
+        result = []
         logger.info("----  List Auctions  ----")
         for row in rows:
             logger.debug(row)
             content = {'Título': row[0], 'Descrição': row[1]}
-            lista.append(content)
+            result.append(content)
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        result = 'User was not inserted.'
+        result = 'Could not list all auctions.'
     finally:
         if conn is not None:
             conn.close()
-
-    return jsonify(lista)
-
+    return result
 
 
+@ app.route("/dbproj/leiloes/", methods=['GET'])
+def list_auctions():
+    logger.info("### GET - List Auctions ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- List Auctions ----")
+    logger.debug(f'payload: {payload}')
+
+    try:
+        cur.execute("SELECT * FROM token WHERE valor = %s",
+                    [payload["valor_token"]])
+        row = cur.fetchone()
+        if row is None:
+            result = 'User is not logged in.'
+            logger.error(result)
+        else:
+            if row[1] > datetime.now():
+                result = list_all_auctions()
+            else:
+                result = "Session expired."
+                delete_token(payload["valor_token"])
+                logger.error(result)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Auctions could not be listed.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+
+###################################
+###### Pesquisar leilões ##########
+###################################
+
+def list_searched_auctions(payload):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    if "ean_artigo" in payload.keys():
+        list_auctions = """
+                        SELECT titulo, descricao
+                        FROM leilao, descricao
+                        WHERE leilao.ean_artigo = %s and leilao.ean_artigo = descricao.leilao_ean_artigo  and estado = 1
+                        """
+        value = [payload["ean_artigo"]]
+
+    elif "descricao" in payload.keys():
+        list_auctions = """
+                        SELECT titulo, descricao
+                        FROM leilao, descricao
+                        WHERE leilao.ean_artigo = descricao.leilao_ean_artigo and estado = 1 and descricao = %s
+                        """
+        value = [payload["descricao"]]
+
+    else:
+        result = 'Ean or description are required to search for an auction.'
+        logger.error(result)
+        return result
+
+    try:
+        cur.execute(list_auctions, value)
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            result = 'There are no auctions with such attributes.'
+            logger.error(result)
+        else:
+            logger.info(rows)
+            result = []
+            logger.info("----  List Auctions  ----")
+            for row in rows:
+                logger.debug(row)
+                content = {'Título': row[0], 'Descrição': row[1]}
+                result.append(content)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Could not list all auctions.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+@ app.route('/dbproj/leiloes/<keyword>/', methods=['GET'])
+def search_auction(keyword):
+    logger.info("### GET - List Auctions (by ID or description) ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- Search Auctions ----")
+    logger.debug(f'payload: {payload}')
+
+    try:
+        cur.execute("SELECT * FROM token WHERE valor = %s",
+                    [payload["valor_token"]])
+        row = cur.fetchone()
+        if row is None:
+            result = 'User is not logged in.'
+            logger.error(result)
+        else:
+            if row[1] > datetime.now():
+                result = list_searched_auctions(payload)
+            else:
+                result = "Session expired."
+                delete_token(payload["valor_token"])
+                logger.error(result)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Auctions were not listed.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+
+################################################
+####### Consultar detalhes dos leilões #########
+################################################
+
+def get_biddings(ean_artigo):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    biddings = """
+                    SELECT valor, data, utilizador_user_name
+                    FROM licitacao
+                    WHERE leilao_ean_artigo = %s and validacao = TRUE
+                    """
+
+    try:
+        cur.execute(biddings, ean_artigo)
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            result = "No biddings to show."
+            logger.info(result)
+        else:
+            result = []
+            logger.info("----  List Messages  ----")
+            for row in rows:
+                logger.debug(row)
+                content = {'Valor': row[0], 'Data': row[1], "Username": row[3]}
+                result.append(content)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Could not list all messages.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+def get_messages(ean_artigo):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    messages = """
+                    SELECT *
+                    FROM mensagem
+                    WHERE leilao_ean_artigo = %s
+                    """
+
+    try:
+        cur.execute(messages, ean_artigo)
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            result = "No messages to show."
+            logger.info(result)
+        else:
+            result = []
+            logger.info("----  List Messages  ----")
+            for row in rows:
+                logger.debug(row)
+                content = {'Mensagem': row[0],
+                           'Data': row[1], "Username": row[3]}
+                result.append(content)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Could not list all messages.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+def list_details(ean_artigo):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    descricao_data = """
+                            SELECT data_final, descricao
+                            FROM leilao, descricao
+                            WHERE leilao.ean_artigo = %s and leilao.ean_artigo = descricao.leilao_ean_artigo and leilao.estado = 1
+                            """
+    value = [ean_artigo]
+
+    result = {}
+    try:
+        cur.execute(descricao_data, value)
+        rows = cur.fetchone()
+        if rows is None:
+            result = 'Auction not found.'
+            logger.error(result)
+        else:
+            logger.info(rows)
+            result["Descricao"] = rows[1]
+            result["Data de término"] = rows[0]
+            result["Menssagens"] = get_messages(ean_artigo)
+            result["Licitacoes"] = get_biddings(ean_artigo)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Could not list auction details.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+@app.route('/dbproj/leilao/<leilaoId>/', methods=['GET'])
+def get_auction_details(leilaoId):
+    logger.info("### GET - Auction Details (by ID) ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- Auction Details ----")
+    logger.debug(f'payload: {payload}')
+
+    try:
+        cur.execute("SELECT * FROM token WHERE valor = %s",
+                    [payload["valor_token"]])
+        row = cur.fetchone()
+        if len(row) is None:
+            result = 'User is not logged in.'
+            logger.error(result)
+        else:
+            if row[1] > datetime.now():
+                result = list_details(payload)
+            else:
+                result = "Session expired."
+                delete_token(payload["valor_token"])
+                logger.error(result)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Auctions were not listed.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+
+##################################################################
+########### Listar detalhes dos leilões por Utilizador ###########
+##################################################################
+
+def list_auctions_byUser(user_name):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    list_auctionsbyUser = """
+                            SELECT ean_artigo
+                            FROM leilao
+                            WHERE leilao.utilizador_user_name like %s
+                            """
+    value = ([user_name])
+
+    list_biddingbyUser
+
+    result = {}
+    try:
+        cur.execute(list_auctionsbyUser, value)
+        rows = cur.fetchall()
+        if len(rows) == 0:
+            result = 'Auction not found.'
+            logger.error(result)
+        else:
+            logger.info(rows)
+            auction_created = []
+            auctions_bidded = []
+            for row in rows:
+                auction_created.append(list_details(row))
+            result["Auctions the user is part of."] = auction_created
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Could not list auction details.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+@app.route('/dbproj/user/<userToken>/', methods=['GET'])
+def get_auction_details_user(userToken):
+    logger.info("### GET - Auction Details (by userID) ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- Auction Details ----")
+    logger.debug(f'payload: {payload}')
+
+    try:
+        cur.execute("SELECT * FROM token WHERE valor = %s",
+                    [payload["valor_token"]])
+        row = cur.fetchone()
+        if len(row) is None:
+            result = 'User is not logged in.'
+            logger.error(result)
+        else:
+            if row[1] > datetime.now():
+                result = list_auctions_byUser(row[2])
+            else:
+                result = "Session expired."
+                delete_token(payload["valor_token"])
+                logger.error(result)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Auctions were not listed.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+
+# @app.route('/dbproj/licitar/<leilaoId>/<licitacao>')
 ##########################################################
 # DATABASE ACCESS
 ##########################################################
+
 
 def db_connection():
     db = psycopg2.connect(user="postgres",
@@ -330,9 +712,10 @@ def db_connection():
 ##########################################################
 # MAIN
 ##########################################################
+
 if __name__ == "__main__":
     # variables
-    add_token.counter = 1_000_000_009
+    add_token.counter = 1_000_000_010
 
     # Set up the logging
     logging.basicConfig(filename="logs/log_file.log")

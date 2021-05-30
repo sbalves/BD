@@ -6,8 +6,6 @@ import logging
 import psycopg2
 import time
 
-base = 1_000_000_000
-
 
 def encode(obj):
     return hash(obj)
@@ -31,11 +29,6 @@ def verify_email(email):
     else:
         print("Invalid Email")
         return False
-
-
-def generate_token_value():
-    global base
-    return base + 1
 
 
 """
