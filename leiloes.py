@@ -725,7 +725,132 @@ def get_auction_details_user(userToken):
     return jsonify(result)
 
 
-# @app.route('/dbproj/licitar/<leilaoId>/<licitacao>')
+
+########################################
+########### Fazer licitações ###########
+########################################
+
+def add_biding(user_name, payload):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    add_bidding =  """
+                INSERT INTO licitacao (valor, data, validacao, utilizador_user_name, leilao_ean_artigo)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+    values = ([payload["preco"]], datetime.now(), "True", user_name, payload["id_leilao"])
+
+    try:
+        cur.execute(add_bidding, values)
+        row = cur.fetchone()
+        if len(row) is None:
+            result = 'The bidding was not added.'
+            logger.error(result)
+        else:
+            result = 'The bidding was added.'
+            add_biding(payload)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Bidding operations could not be done.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+def confirm_bidding(payload, user_name):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    confirm_bidding =  """
+                        SELECT valor, max(data)
+                        FROM licitacao
+                        WHERE ean_artigo = %s and validacao = True
+                        """
+    values = ([payload["id_leilao"]], [payload["preco"]])
+
+    try:
+        cur.execute(confirm_bidding, values)
+        row = cur.fetchone()
+        if len(row) is None:
+            result = 'The bidding was to low.'
+            logger.error(result)
+        else:
+            result = 'Bidding was added.'
+            add_biding(payload, user_name)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Bidding operations could not be done.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
+
+
+def bidding(user_name, payload):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    bidding =  """
+                SELECT *
+                FROM leilao
+                WHERE ean_artigo = %s and estado = 1 and preco_minimo < %s
+                """
+    values = ([payload["id_leilao"]], [payload["preco"]])
+
+    try:
+        cur.execute(bidding, values)
+        row = cur.fetchone()
+        if len(row) is None:
+            result = 'There is not an auction for that article or it is not avaible.'
+            logger.error(result)
+        else:
+            result = confirm_bidding(row, user_name)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Bidding operations could not be done.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+
+@app.route('/dbproj/licitar/<leilaoId>/<licitacao>')
+def make_bidding(leilaoId):
+    logger.info("### GET - Make bidding ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- Bidding ----")
+    logger.debug(f'payload: {payload}')
+
+    try:
+        cur.execute("SELECT * FROM token WHERE valor = %s", [payload["valor_token"]])
+        row = cur.fetchone()
+        if len(row) is None:
+            result = 'User is not logged in.'
+            logger.error(result)
+        else:
+            if row[1] > datetime.now():
+                result = bidding(row[2], payload)
+                logger.info("Bidding operation is starting...")
+            else:
+                result = "Session expired."
+                delete_token(payload["valor_token"])
+                logger.error(result)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Bidding operations could not be done.'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+
+
+
 ##########################################################
 # DATABASE ACCESS
 ##########################################################
