@@ -9,7 +9,7 @@ CREATE TABLE utilizador (
 );
 
 CREATE TABLE leilao (
-	titulo		 VARCHAR(512),
+	vencedor VARCHAR(512),
 	ean_artigo		 INTEGER,
 	estado		 INTEGER,
 	data_final		 TIMESTAMP,
@@ -35,6 +35,7 @@ CREATE TABLE mensagem (
 );
 
 CREATE TABLE descricao (
+	titulo		 VARCHAR(512),
 	descricao	 VARCHAR(512),
 	data		 TIMESTAMP,
 	leilao_ean_artigo INTEGER NOT NULL
