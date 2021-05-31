@@ -1,0 +1,68 @@
+CREATE TABLE utilizador (
+	user_name VARCHAR(512),
+	email	 VARCHAR(512) UNIQUE,
+	password	 VARCHAR(512),
+	estado	 BOOL,
+	avaliacao INTEGER,
+	admin	 BOOL,
+	PRIMARY KEY(user_name)
+);
+
+CREATE TABLE leilao (
+	vencedor VARCHAR(512),
+	ean_artigo		 INTEGER,
+	estado		 INTEGER,
+	data_final		 TIMESTAMP,
+	data_inicial	 TIMESTAMP,
+	preco_min		 FLOAT(8),
+	utilizador_user_name VARCHAR(512) NOT NULL,
+	PRIMARY KEY(ean_artigo)
+);
+
+CREATE TABLE licitacao (
+	valor		 FLOAT(8),
+	data		 TIMESTAMP,
+	validacao		 BOOL,
+	utilizador_user_name VARCHAR(512) NOT NULL,
+	leilao_ean_artigo	 INTEGER NOT NULL
+);
+
+CREATE TABLE mensagem (
+	descricao		 VARCHAR(512),
+	data		 TIMESTAMP,
+	leilao_ean_artigo	 INTEGER NOT NULL,
+	utilizador_user_name VARCHAR(512) NOT NULL
+);
+
+CREATE TABLE descricao (
+	titulo		 VARCHAR(512),
+	descricao	 VARCHAR(512),
+	data		 TIMESTAMP,
+	leilao_ean_artigo INTEGER NOT NULL
+);
+
+CREATE TABLE notificacao (
+	descricao		 VARCHAR(512),
+	leilao_ean_artigo	 INTEGER NOT NULL,
+	utilizador_user_name VARCHAR(512) NOT NULL
+	data_entrega		 TIMESTAMP,
+
+);
+
+CREATE TABLE token (
+	valor		 BIGINT,
+	validade		 TIMESTAMP,
+	utilizador_user_name VARCHAR(512) NOT NULL,
+	PRIMARY KEY(valor)
+);
+
+ALTER TABLE leilao ADD CONSTRAINT leilao_fk1 FOREIGN KEY (utilizador_user_name) REFERENCES utilizador(user_name);
+ALTER TABLE licitacao ADD CONSTRAINT licitacao_fk1 FOREIGN KEY (utilizador_user_name) REFERENCES utilizador(user_name);
+ALTER TABLE licitacao ADD CONSTRAINT licitacao_fk2 FOREIGN KEY (leilao_ean_artigo) REFERENCES leilao(ean_artigo);
+ALTER TABLE mensagem ADD CONSTRAINT mensagem_fk1 FOREIGN KEY (leilao_ean_artigo) REFERENCES leilao(ean_artigo);
+ALTER TABLE mensagem ADD CONSTRAINT mensagem_fk2 FOREIGN KEY (utilizador_user_name) REFERENCES utilizador(user_name);
+ALTER TABLE descricao ADD CONSTRAINT descricao_fk1 FOREIGN KEY (leilao_ean_artigo) REFERENCES leilao(ean_artigo);
+ALTER TABLE notificacao ADD CONSTRAINT notificacao_fk1 FOREIGN KEY (leilao_ean_artigo) REFERENCES leilao(ean_artigo);
+ALTER TABLE notificacao ADD CONSTRAINT notificacao_fk2 FOREIGN KEY (utilizador_user_name) REFERENCES utilizador(user_name);
+ALTER TABLE token ADD CONSTRAINT token_fk1 FOREIGN KEY (utilizador_user_name) REFERENCES utilizador(user_name);
+
